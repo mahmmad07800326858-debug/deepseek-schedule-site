@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جدول الدروس · مشاركة الباركود ومشاركة الموقع</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,7 +22,6 @@
             min-height:100vh; display:flex; justify-content:center; padding:20px 10px 60px;
         }
         .main-container { width:100%; max-width:1200px; display:flex; flex-direction:column; gap:20px; }
-
         .toolbar {
             display:flex; align-items:center; justify-content:center; gap:10px;
             background:var(--card-bg); padding:10px 16px; border-radius:var(--radius);
@@ -52,7 +49,6 @@
             background:transparent; cursor:pointer; font-family:'Cairo'; font-size:0.9rem; text-align:right;
             border-radius:8px; transition:0.15s; }
         .dropdown-item:hover { background:#f1f5f9; }
-
         .overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.55); z-index:500;
             display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
         .overlay.show { display:flex; }
@@ -67,7 +63,6 @@
             background:white; border-radius:50%; transition:0.3s; }
         .toggle-switch input:checked+.toggle-slider { background:var(--dev); }
         .toggle-switch input:checked+.toggle-slider::before { transform:translateX(24px); }
-
         .tables-container { display:flex; flex-direction:column; gap:20px; }
         .schedule-card { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
             padding:24px 20px; position:relative; page-break-inside:avoid; }
@@ -82,23 +77,18 @@
         .schedule-table tbody td { background:#fff; }
         .schedule-table tbody tr:nth-child(even) td { background:#f8fafc; }
         .schedule-table tbody tr:hover td { background:#e8f4fd; }
-
         [contenteditable="true"] { background:#fffdf5 !important; border:2px dashed #fcd34d !important; cursor:text; }
-
         .dev-controls { display:none; justify-content:center; gap:10px; margin-top:16px; flex-wrap:wrap; }
         .dev-controls.active { display:flex; }
         .btn-dev { padding:9px 18px; border-radius:50px; border:2px solid var(--dev); background:#fff;
             cursor:pointer; font-family:'Cairo'; font-weight:600; color:#92400e; }
-
         .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(120px);
             background:#1e293b; color:#fff; padding:12px 24px; border-radius:50px; font-family:'Cairo';
             font-weight:600; z-index:999; pointer-events:none; transition:0.35s; }
         .toast.show { transform:translateX(-50%) translateY(0); }
-
         .qr-container { text-align:center; }
         #qrcodeCanvas { display:inline-block; margin:10px auto; }
         .btn-close { background:#f1f5f9; padding:10px 24px; border-radius:50px; border:none; cursor:pointer; font-family:'Cairo'; font-weight:600; margin-top:12px; }
-
         @media print {
             .toolbar, .dev-controls, .dropdown, .overlay, .toast, .search-wrapper { display:none !important; }
             .schedule-card { box-shadow:none; border:none; padding:5mm; }
@@ -130,17 +120,13 @@
                 <button class="dropdown-item" data-action="image"><span>🖼️</span> تصدير صورة</button>
             </div>
         </div>
-
         <div class="tables-container" id="tablesContainer"></div>
-
         <div class="dev-controls" id="devControls">
             <button class="btn-dev" id="btnAddRow">➕ إضافة حصة</button>
             <button class="btn-dev" id="btnRemoveRow">➖ حذف آخر حصة</button>
             <button class="btn-dev" id="btnResetTable">🔄 إعادة تعيين</button>
         </div>
     </div>
-
-    <!-- كلمة المرور -->
     <div class="overlay" id="passwordOverlay">
         <div class="dialog">
             <h3>🔐 كلمة المرور</h3>
@@ -152,8 +138,6 @@
             </div>
         </div>
     </div>
-
-    <!-- الإعدادات -->
     <div class="overlay" id="settingsOverlay">
         <div class="dialog" style="width:560px;max-height:85vh;overflow-y:auto;padding:24px;">
             <h3>⚙️ الإعدادات</h3>
@@ -172,14 +156,12 @@
                 </label>
             </div>
             <input type="text" id="newRecordName" placeholder="اسم السجل الجديد" style="width:100%;padding:10px;border-radius:50px;border:1px solid #ccc; margin:10px 0;">
-            <button id="btnSaveRecord" style="background:#10b981;color:#fff;padding:10px;border:none;border-radius:50px;width:100%;cursor:pointer;">💾 حفظ الجدول الحالي كسجل</button>
+            <button id="btnSaveRecord" style="background:#10b981;color:#fff;padding:10px;border:none;border-radius:50px;width:100%;cursor:pointer;font-family:'Cairo';font-weight:600;">💾 حفظ الجدول الحالي كسجل</button>
             <h4 style="margin-top:20px;">📋 السجلات المحفوظة</h4>
             <div id="recordsList" style="max-height:300px;overflow-y:auto;"></div>
-            <button id="btnCloseSettings" style="background:#f1f5f9;padding:10px;border:none;border-radius:50px;width:100%;margin-top:16px;cursor:pointer;">✕ إغلاق</button>
+            <button id="btnCloseSettings" style="background:#f1f5f9;padding:10px;border:none;border-radius:50px;width:100%;margin-top:16px;cursor:pointer;font-family:'Cairo';font-weight:600;">✕ إغلاق</button>
         </div>
     </div>
-
-    <!-- نافذة الباركود -->
     <div class="overlay" id="qrOverlay">
         <div class="dialog qr-container">
             <h3>📱 باركود الجدول</h3>
@@ -189,9 +171,7 @@
             <button class="btn-close" id="btnCloseQr">إغلاق</button>
         </div>
     </div>
-
     <div class="toast" id="toast"></div>
-
     <script>
         (function() {
             const PASSWORD = '20262026';
@@ -200,8 +180,8 @@
             let showAll = true;
             let records = [];
             let activeId = null;
-            const defaultHTML = `<table class="schedule-table"><colgroup><col style="width:80px;"><col style="width:200px;"><col style="width:130px;"><col style="width:140px;"><col style="width:160px;"></colgroup><thead><tr><th>التسلسل</th><th>الموضوع</th><th>الوقت</th><th>رقم الغرفة</th><th>المدرس</th></tr></thead><tbody><tr><td>١</td><td>الرياضيات</td><td>٨:٠٠ - ٨:٤٥</td><td>قاعة ١٠١</td><td>أ. محمد</td></tr><tr><td>٢</td><td>اللغة العربية</td><td>٨:٤٥ - ٩:٣٠</td><td>قاعة ١٠٢</td><td>أ. فاطمة</td></tr><tr><td>٣</td><td>الفيزياء</td><td>٩:٣٠ - ١٠:١٥</td><td>معمل ١</td><td>أ. خالد</td></tr><tr><td>٤</td><td>اللغة الإنجليزية</td><td>١٠:٣٠ - ١١:١٥</td><td>قاعة ١٠٤</td><td>أ. سارة</td></tr><tr><td>٥</td><td>الكيمياء</td><td>١١:١٥ - ١٢:٠٠</td><td>معمل ٢</td><td>أ. عمر</td></tr><tr><td>٦</td><td>التاريخ</td><td>١٢:٠٠ - ١٢:٤٥</td><td>قاعة ١٠٣</td><td>أ. نورة</td></tr><tr><td>٧</td><td>التربية الرياضية</td><td>١٢:٤٥ - ١:٣٠</td><td>ساحة</td><td>أ. ياسر</td></tr></tbody></table>`;
-
+            const defaultHTML = `<table class="schedule-table"><colgroup><col style="width:80px;"><col style="width:200px;"><col style="width:130px;"><col style="width:140px;"><col style="width:160px;"></colgroup><thead><tr><th>رقم</th><th>المادة</th><th>الساعة</th><th>الفصل</th><th>الملاحظات</th></tr></thead><tbody><tr><td>١</td><td>اللغة العربية</td><td>٨:٣٠</td><td>الفصل ١</td><td>—</td></tr><tr><td>٢</td><td>الرياضيات</td><td>٩:٣٠</td><td>الفصل ١</td><td>—</td></tr><tr><td>٣</td><td>العلوم</td><td>١٠:٣٠</td><td>الفصل ١</td><td>—</td></tr></tbody></table>`;
+            
             function loadRecords() {
                 try { records = JSON.parse(localStorage.getItem(STORAGE)) || []; } catch { records = []; }
                 if (!records.length) {
@@ -319,44 +299,19 @@
                 list.innerHTML = records.map(r => `
                     <div style="display:flex;align-items:center;gap:8px;padding:8px;background:#fff;border:1px solid #ccc;border-radius:8px;margin-bottom:4px;">
                         <span style="flex:1;"><strong>${r.name}</strong><br><small>${r.public ? '🟢 عام' : '🟡 خاص'} ${r.showOnHome ? '📌 معروض' : 'ـ مخفي'}</small></span>
-                        <button onclick="window._loadRecord('${r.id}')">📥 عرض</button>
-                        <button onclick="window._togglePublic('${r.id}')">${r.public ? '🔒' : '🌐'}</button>
-                        <button onclick="window._toggleHome('${r.id}')">${r.showOnHome ? '👁️' : '🙈'}</button>
-                        <button onclick="window._deleteRecord('${r.id}')">🗑️</button>
+                        <button onclick="window._loadRecord('${r.id}')" style="padding:4px 8px;border:none;background:#e3f2fd;cursor:pointer;border-radius:4px;">📥 عرض</button>
+                        <button onclick="window._togglePublic('${r.id}')" style="padding:4px 8px;border:none;background:#fff3e0;cursor:pointer;border-radius:4px;">${r.public ? '🔒' : '🌐'}</button>
+                        <button onclick="window._toggleHome('${r.id}')" style="padding:4px 8px;border:none;background:#f3e5f5;cursor:pointer;border-radius:4px;">${r.showOnHome ? '👁️' : '🙈'}</button>
+                        <button onclick="window._deleteRecord('${r.id}')" style="padding:4px 8px;border:none;background:#ffebee;cursor:pointer;border-radius:4px;">🗑️</button>
                     </div>`).join('');
             }
 
-            window._loadRecord = (id) => {
-                activeId = id;
-                showAll = false;
-                document.getElementById('showAllToggle').checked = false;
-                localStorage.setItem('showAll', 'false');
-                render();
-                document.getElementById('settingsOverlay').classList.remove('show');
-            };
-            window._togglePublic = (id) => {
-                const rec = records.find(r => r.id === id);
-                if (rec) { rec.public = !rec.public; saveRecords(); refreshRecordList(); }
-            };
-            window._toggleHome = (id) => {
-                const rec = records.find(r => r.id === id);
-                if (rec) { rec.showOnHome = !rec.showOnHome; saveRecords(); refreshRecordList(); render(); }
-            };
-            window._deleteRecord = (id) => {
-                if (!confirm('حذف السجل؟')) return;
-                records = records.filter(r => r.id !== id);
-                saveRecords();
-                render();
-                refreshRecordList();
-            };
+            window._loadRecord = (id) => { activeId = id; showAll = false; document.getElementById('showAllToggle').checked = false; localStorage.setItem('showAll', 'false'); render(); document.getElementById('settingsOverlay').classList.remove('show'); };
+            window._togglePublic = (id) => { const rec = records.find(r => r.id === id); if (rec) { rec.public = !rec.public; saveRecords(); refreshRecordList(); } };
+            window._toggleHome = (id) => { const rec = records.find(r => r.id === id); if (rec) { rec.showOnHome = !rec.showOnHome; saveRecords(); refreshRecordList(); render(); } };
+            window._deleteRecord = (id) => { if (!confirm('حذف السجل؟')) return; records = records.filter(r => r.id !== id); saveRecords(); render(); refreshRecordList(); };
 
-            // ===== دوال المشاركة =====
-            // رابط الصفحة الحالي (وليس رابط الجدول الداخلي فقط)
-            function getPageUrl() {
-                return window.location.href.split('#')[0]; // رابط نظيف بدون hash
-            }
-
-            // نسخ الرابط إلى الحافظة
+            function getPageUrl() { return window.location.href.split('#')[0]; }
             function copyToClipboard(text) {
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(text).then(() => showToast('🔗 تم نسخ الرابط'));
@@ -372,22 +327,14 @@
                     showToast('🔗 تم النسخ');
                 }
             }
-
-            // المشاركة الأصلية (Web Share API)
             function nativeShare(url) {
                 if (navigator.share) {
-                    navigator.share({
-                        title: 'جدول الدروس',
-                        text: 'تفضل بالإطلاع على جدول الدروس',
-                        url: url
-                    }).catch(() => {});
+                    navigator.share({ title: 'جدول الدروس', text: 'تفضل بالإطلاع على جدول الدروس', url: url }).catch(() => {});
                 } else {
                     copyToClipboard(url);
                     showToast('📋 الرابط جاهز، شاركه يدوياً');
                 }
             }
-
-            // مشاركة الباركود
             function showQRCode() {
                 const url = getPageUrl();
                 const overlay = document.getElementById('qrOverlay');
@@ -395,17 +342,8 @@
                 overlay.classList.add('show');
                 const container = document.getElementById('qrcodeCanvas');
                 container.innerHTML = '';
-                new QRCode(container, {
-                    text: url,
-                    width: 200,
-                    height: 200,
-                    colorDark: '#1a6fb5',
-                    colorLight: '#ffffff',
-                    correctLevel: QRCode.CorrectLevel.M
-                });
+                new QRCode(container, { text: url, width: 200, height: 200, colorDark: '#1a6fb5', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
             }
-
-            // تصدير إلى ملف Word
             function exportWord() {
                 const cards = document.querySelectorAll('.schedule-card');
                 let html = '';
@@ -415,7 +353,7 @@
                     const table = card.querySelector('.table-wrap')?.innerHTML || '';
                     html += `<div style="margin-bottom:20px;"><h2 style="text-align:center;">${school}</h2><p style="text-align:center;">${date}</p>${table}</div>`;
                 });
-                const fullHtml = `<html dir="rtl"><head><meta charset="UTF-8"><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:20px;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #000;padding:8px;text-align:center;}</style></head><body>${html}</body></html>`;
+                const fullHtml = `<html dir="rtl"><head><meta charset="UTF-8"><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:20px;} table{border-collapse:collapse;width:100%;} th,td{border:1px solid #999;padding:8px;text-align:center;} th{background:#1a6fb5;color:#fff;}</style></head><body>${html}</body></html>`;
                 const blob = new Blob(['\ufeff' + fullHtml], { type: 'application/msword' });
                 const a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
@@ -424,58 +362,24 @@
                 showToast('📄 تم التصدير إلى Word');
             }
 
-            // زر المشاركة والقائمة
-            document.getElementById('btnShare').addEventListener('click', (e) => {
-                e.stopPropagation();
-                document.getElementById('shareDropdown').classList.toggle('show');
-            });
-
+            document.getElementById('btnShare').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('shareDropdown').classList.toggle('show'); });
             document.getElementById('shareDropdown').addEventListener('click', e => {
                 const action = e.target.closest('.dropdown-item')?.dataset.action;
                 if (!action) return;
                 e.preventDefault();
                 document.getElementById('shareDropdown').classList.remove('show');
-
-                if (action === 'share-site') {
-                    nativeShare(getPageUrl());
-                } else if (action === 'qr-code') {
-                    showQRCode();
-                } else if (action === 'copy-link') {
-                    copyToClipboard(getPageUrl());
-                } else if (action === 'print') {
-                    window.print();
-                } else if (action === 'pdf') {
-                    showToast('📑 استخدم حفظ كـ PDF من نافذة الطباعة');
-                    window.print();
-                } else if (action === 'word') {
-                    exportWord();
-                } else if (action === 'image') {
-                    html2canvas(document.querySelector('.schedule-card') || document.body, {
-                        scale: 2,
-                        backgroundColor: '#ffffff'
-                    }).then(canvas => {
-                        const a = document.createElement('a');
-                        a.download = 'جدول_الدروس.png';
-                        a.href = canvas.toDataURL();
-                        a.click();
-                        showToast('🖼️ تم حفظ الصورة');
-                    }).catch(() => showToast('⚠️ خطأ في التصدير'));
-                }
+                if (action === 'share-site') nativeShare(getPageUrl());
+                else if (action === 'qr-code') showQRCode();
+                else if (action === 'copy-link') copyToClipboard(getPageUrl());
+                else if (action === 'print') window.print();
+                else if (action === 'pdf') { showToast('📑 استخدم حفظ كـ PDF من نافذة الطباعة'); window.print(); }
+                else if (action === 'word') exportWord();
+                else if (action === 'image') html2canvas(document.querySelector('.schedule-card') || document.body, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => { const a = document.createElement('a'); a.download = 'جدول_الدروس.png'; a.href = canvas.toDataURL(); a.click(); showToast('🖼️ تم حفظ الصورة'); }).catch(() => showToast('⚠️ خطأ في التصدير'));
             });
 
-            // إغلاق الباركود
-            document.getElementById('btnCloseQr').addEventListener('click', () => {
-                document.getElementById('qrOverlay').classList.remove('show');
-            });
+            document.getElementById('btnCloseQr').addEventListener('click', () => document.getElementById('qrOverlay').classList.remove('show'));
+            document.addEventListener('click', (e) => { if (!e.target.closest('#shareDropdown') && !e.target.closest('#btnShare')) document.getElementById('shareDropdown').classList.remove('show'); });
 
-            // غلق القوائم عند النقر خارجها
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('#shareDropdown') && !e.target.closest('#btnShare')) {
-                    document.getElementById('shareDropdown').classList.remove('show');
-                }
-            });
-
-            // ===== Dev actions =====
             document.getElementById('btnAddRow').addEventListener('click', () => {
                 if (!isDevMode) return;
                 const tbody = document.querySelector('.schedule-table tbody');
@@ -495,10 +399,7 @@
             document.getElementById('btnRemoveRow').addEventListener('click', () => {
                 if (!isDevMode) return;
                 const tbody = document.querySelector('.schedule-table tbody');
-                if (tbody && tbody.children.length > 2) {
-                    tbody.lastChild.remove();
-                    saveCurrentTable();
-                }
+                if (tbody && tbody.children.length > 2) { tbody.lastChild.remove(); saveCurrentTable(); }
             });
             document.getElementById('btnResetTable').addEventListener('click', () => {
                 if (!isDevMode) return;
@@ -516,47 +417,21 @@
                 if (!card) return;
                 const recordId = card.dataset.recordId;
                 const rec = records.find(r => r.id === recordId);
-                if (rec) {
-                    rec.html = card.querySelector('.table-wrap')?.innerHTML || rec.html;
-                    rec.school = card.querySelector('.school-name')?.textContent || rec.school;
-                    rec.date = card.querySelector('.date')?.textContent || rec.date;
-                    saveRecords();
-                }
+                if (rec) { rec.html = card.querySelector('.table-wrap')?.innerHTML || rec.html; rec.school = card.querySelector('.school-name')?.textContent || rec.school; rec.date = card.querySelector('.date')?.textContent || rec.date; saveRecords(); }
             }
 
-            document.addEventListener('input', e => {
-                if (!isDevMode) return;
-                if (e.target.closest('.schedule-table') || e.target.classList.contains('school-name') || e.target.classList.contains('date')) {
-                    saveCurrentTable();
-                }
-            });
+            document.addEventListener('input', e => { if (!isDevMode) return; if (e.target.closest('.schedule-table') || e.target.classList.contains('school-name') || e.target.classList.contains('date')) saveCurrentTable(); });
+            document.addEventListener('click', e => { if (!isDevMode && (e.target.isContentEditable || e.target.closest('[contenteditable="true"]'))) { e.preventDefault(); showToast('🔒 القفل مفعّل'); } }, true);
 
-            document.addEventListener('click', e => {
-                if (!isDevMode && (e.target.isContentEditable || e.target.closest('[contenteditable="true"]'))) {
-                    e.preventDefault();
-                    showToast('🔒 القفل مفعّل');
-                }
-            }, true);
-
-            function toArabic(numStr) {
-                const map = { '0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩' };
-                return numStr.replace(/[0-9]/g, d => map[d] || d);
-            }
-
-            function showToast(msg, dur = 2200) {
-                const t = document.getElementById('toast');
-                t.textContent = msg;
-                t.classList.add('show');
-                setTimeout(() => t.classList.remove('show'), dur);
-            }
+            function toArabic(numStr) { const map = { '0':'٠','1':'١','2':'٢','3':'٣','4':'٤','5':'٥','6':'٦','7':'٧','8':'٨','9':'٩' }; return numStr.replace(/[0-9]/g, d => map[d] || d); }
+            function showToast(msg, dur = 2200) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), dur); }
 
             showAll = localStorage.getItem('showAll') !== 'false';
             document.getElementById('showAllToggle').checked = showAll;
             render();
 
             document.addEventListener('keydown', e => {
-                if (e.ctrlKey && e.key === 'k') { e.preventDefault();
-                    document.getElementById('searchInput').focus(); }
+                if (e.ctrlKey && e.key === 'k') { e.preventDefault(); document.getElementById('searchInput').focus(); }
                 if (e.key === 'Escape') {
                     document.getElementById('passwordOverlay').classList.remove('show');
                     document.getElementById('settingsOverlay').classList.remove('show');
